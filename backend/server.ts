@@ -3,6 +3,9 @@ import express, {
   Response
 } from 'express';
 
+import campaignRoutes
+from './routes/campaignRoutes';
+
 import mongoose from 'mongoose';
 
 import cors from 'cors';
@@ -14,6 +17,7 @@ from './routes/authRoutes';
 
 import profileRoutes
 from './routes/profileRoutes';
+
 
 dotenv.config();
 
@@ -50,6 +54,11 @@ app.use(
   profileRoutes
 );
 
+app.use(
+  '/api/campaign',
+  campaignRoutes
+);
+
 app.get(
   '/',
   (
@@ -74,3 +83,4 @@ app.listen(
 
   }
 );
+
