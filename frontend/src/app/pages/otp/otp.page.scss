@@ -1,0 +1,17 @@
+:host {
+
+  --auth-gradient-primary:
+    linear-gradient(
+      135deg,
+      #06b6d4,
+      #3b82f6
+    );
+
+  --auth-bg-gradient:
+    linear-gradient(
+      135deg,
+      #f0f9ff 0%,
+      #ecfeff 50%,
+      #eef2ff 100%
+    );
+}

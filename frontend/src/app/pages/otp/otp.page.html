@@ -1,0 +1,127 @@
+<ion-content fullscreen>
+
+  <div class="auth-container">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        O
+      </div>
+
+      <h1 class="auth-title">
+        Verify OTP
+      </h1>
+
+      <p class="auth-subtitle">
+
+        Enter the verification code
+        sent to your email
+
+      </p>
+
+      <form [formGroup]="otpForm">
+
+        <!-- EMAIL -->
+
+        <label class="auth-label">
+          Email address
+        </label>
+
+        <ion-item
+          lines="none"
+          class="auth-input">
+
+          <ion-input
+            readonly="true"
+            formControlName="email">
+          </ion-input>
+
+        </ion-item>
+
+        <!-- OTP -->
+
+        <label class="auth-label">
+          Verification code
+        </label>
+
+        <div class="otp-wrapper">
+
+          <ion-input-otp
+            formControlName="otp"
+            length="4">
+
+          </ion-input-otp>
+
+        </div>
+
+        <p
+          class="auth-error"
+          *ngIf="
+          otpForm.get('otp')?.touched &&
+          otpForm.get('otp')?.invalid
+          ">
+
+          Enter valid 4 digit OTP
+
+        </p>
+
+        <!-- BACKEND ERROR -->
+
+        <p
+          class="auth-error"
+          *ngIf="errorMessage">
+
+          {{ errorMessage }}
+
+        </p>
+
+        <!-- BUTTON -->
+
+        <ion-button
+          expand="block"
+          class="auth-button"
+          [disabled]="loading"
+          (click)="verifyOtp()">
+
+          <ion-spinner
+            *ngIf="loading"
+            name="crescent">
+          </ion-spinner>
+
+          <span *ngIf="!loading">
+
+            Verify OTP
+
+          </span>
+
+        </ion-button>
+
+        <!-- RESEND -->
+
+        <div class="otp-resend">
+
+          <span *ngIf="resendDisabled">
+
+            Resend OTP in
+            00:{{ timer }}
+
+          </span>
+
+          <span
+            class="resend-active"
+            *ngIf="!resendDisabled"
+            (click)="resendOtp()">
+
+            Resend OTP
+
+          </span>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</ion-content>

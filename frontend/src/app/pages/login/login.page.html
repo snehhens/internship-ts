@@ -1,0 +1,148 @@
+<ion-content fullscreen>
+
+  <div class="auth-container">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        L
+      </div>
+
+      <h1 class="auth-title">
+        Welcome back
+      </h1>
+
+      <p class="auth-subtitle">
+
+        Login to continue your
+        authentication journey
+
+      </p>
+
+      <form [formGroup]="loginForm">
+
+        <!-- EMAIL -->
+
+        <label class="auth-label">
+          Email address
+        </label>
+
+        <ion-item
+          lines="none"
+          class="auth-input">
+
+          <ion-input
+            type="email"
+            placeholder="Enter your email"
+            formControlName="email">
+
+          </ion-input>
+
+        </ion-item>
+
+        <p
+          class="auth-error"
+          *ngIf="
+          loginForm.get('email')?.touched &&
+          loginForm.get('email')?.invalid
+          ">
+
+          Enter valid email
+
+        </p>
+
+        <!-- PASSWORD -->
+
+        <label class="auth-label">
+          Password
+        </label>
+
+        <ion-item
+          lines="none"
+          class="auth-input">
+
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter password"
+            formControlName="password">
+
+          </ion-input>
+
+          <ion-button
+            fill="clear"
+            slot="end"
+            (click)="showPassword = !showPassword">
+
+            <ion-icon
+              [name]="
+              showPassword
+              ? 'eye-off-outline'
+              : 'eye-outline'
+              ">
+            </ion-icon>
+
+          </ion-button>
+
+        </ion-item>
+
+        <p
+          class="auth-error"
+          *ngIf="
+          loginForm.get('password')?.touched &&
+          loginForm.get('password')?.invalid
+          ">
+
+          Password must be at least 6 characters
+
+        </p>
+
+        <!-- BACKEND ERROR -->
+
+        <p
+          class="auth-error"
+          *ngIf="errorMessage">
+
+          {{ errorMessage }}
+
+        </p>
+
+        <!-- BUTTON -->
+
+        <ion-button
+          expand="block"
+          class="auth-button"
+          [disabled]="loading"
+          (click)="login()">
+
+          <ion-spinner
+            *ngIf="loading"
+            name="crescent">
+          </ion-spinner>
+
+          <span *ngIf="!loading">
+
+            Login
+
+          </span>
+
+        </ion-button>
+
+        <!-- FOOTER -->
+
+        <div class="auth-footer">
+
+          Don't have an account?
+
+          <span routerLink="/register">
+            Register
+          </span>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</ion-content>

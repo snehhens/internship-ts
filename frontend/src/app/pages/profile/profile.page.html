@@ -1,0 +1,340 @@
+<ion-content fullscreen>
+
+  <div class="auth-container">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        P
+      </div>
+
+      <h1 class="auth-title">
+        Complete Profile
+      </h1>
+
+      <p class="auth-subtitle">
+
+        Finish setting up your
+        account
+
+      </p>
+
+      <form [formGroup]="profileForm">
+
+        <!-- EMAIL -->
+
+        <label class="auth-label">
+          Email
+        </label>
+
+        <ion-item lines="none" class="auth-input">
+
+          <ion-input readonly="true" formControlName="email">
+          </ion-input>
+
+        </ion-item>
+
+        <!-- CONTACT -->
+
+        <label class="auth-label">
+          Contact Number
+        </label>
+
+        <ion-item lines="none" class="auth-input">
+
+          <ion-input type="tel" placeholder="Enter contact number" formControlName="contactNumber">
+
+          </ion-input>
+
+        </ion-item>
+
+        <p class="auth-error" *ngIf="
+          profileForm.get('contactNumber')?.touched &&
+          profileForm.get('contactNumber')?.invalid
+          ">
+
+          Enter valid 10 digit number
+
+        </p>
+
+        <!-- USERNAME -->
+
+        <label class="auth-label">
+          Username
+        </label>
+
+        <ion-item lines="none" class="auth-input">
+
+          <ion-input placeholder="Enter username" formControlName="username">
+
+          </ion-input>
+
+        </ion-item>
+
+        <p class="auth-error" *ngIf="
+          profileForm.get('username')?.touched &&
+          profileForm.get('username')?.invalid
+          ">
+
+          Username must be at least 3 characters
+
+        </p>
+
+        <!-- BIO -->
+
+        <label class="auth-label">
+          Bio
+        </label>
+
+        <ion-item lines="none" class="auth-input auth-textarea">
+
+          <ion-textarea rows="4" placeholder="Tell us about yourself" formControlName="bio">
+
+          </ion-textarea>
+
+        </ion-item>
+
+        <p class="auth-error" *ngIf="
+          profileForm.get('bio')?.touched &&
+          profileForm.get('bio')?.invalid
+          ">
+
+          Bio must be at least 10 characters
+
+        </p>
+
+        <div *ngIf="role === 'influencer'">
+
+          <!-- CATEGORY -->
+
+          <label class="auth-label">
+            Category
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="Fashion, Tech, Travel..." formControlName="category">
+            </ion-input>
+
+          </ion-item>
+
+          <!-- COUNTRY -->
+
+          <label class="auth-label">
+            Country
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="India" formControlName="country">
+            </ion-input>
+
+          </ion-item>
+
+          <!-- INSTAGRAM -->
+
+          <label class="auth-label">
+            Instagram
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="Instagram username" formControlName="instagram">
+
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Instagram Followers
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input type="number" placeholder="5000" formControlName="instagramFollowers">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            YouTube Channel
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="yourchannel" formControlName="youtube">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            YouTube Followers
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input type="number" placeholder="10000" formControlName="youtubeFollowers">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            X Username
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="yourhandle" formControlName="twitter">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            X Followers
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input type="number" placeholder="2000" formControlName="twitterFollowers">
+            </ion-input>
+
+          </ion-item>
+
+        </div>
+
+        <div *ngIf="role === 'brand'">
+
+          <label class="auth-label">
+            First Name
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="John" formControlName="firstName">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Last Name
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="Doe" formControlName="lastName">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Brand Description
+          </label>
+
+          <ion-item lines="none" class="auth-input auth-textarea">
+
+            <ion-textarea rows="4" placeholder="Tell us about your brand" formControlName="brandDescription">
+            </ion-textarea>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Website
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input placeholder="https://yourbrand.com" formControlName="website">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Industry
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-select multiple="true" placeholder="Select industries" formControlName="industry">
+
+              <ion-select-option value="fashion">
+                Fashion
+              </ion-select-option>
+
+              <ion-select-option value="beauty">
+                Beauty
+              </ion-select-option>
+
+              <ion-select-option value="technology">
+                Technology
+              </ion-select-option>
+
+              <ion-select-option value="food">
+                Food
+              </ion-select-option>
+
+            </ion-select>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Budget Range Min
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input type="number" placeholder="1000" formControlName="budgetMin">
+            </ion-input>
+
+          </ion-item>
+
+          <label class="auth-label">
+            Budget Range Max
+          </label>
+
+          <ion-item lines="none" class="auth-input">
+
+            <ion-input type="number" placeholder="100000" formControlName="budgetMax">
+            </ion-input>
+
+          </ion-item>
+
+         
+
+        </div>
+
+
+
+
+
+
+
+        <!-- BACKEND ERROR -->
+
+        <p class="auth-error" *ngIf="errorMessage">
+
+          {{ errorMessage }}
+
+        </p>
+
+        <!-- BUTTON -->
+
+        <ion-button expand="block" class="auth-button" [disabled]="loading" (click)="saveProfile()">
+
+          <ion-spinner *ngIf="loading" name="crescent">
+          </ion-spinner>
+
+          <span *ngIf="!loading">
+
+            Save Profile
+
+          </span>
+
+        </ion-button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</ion-content>

@@ -1,0 +1,136 @@
+<ion-content fullscreen>
+
+  <div class="auth-container">
+
+    <div class="auth-card">
+
+      <div class="auth-logo">
+        A
+      </div>
+
+      <h1 class="auth-title">
+        Create account
+      </h1>
+
+      <p class="auth-subtitle">
+        Start your authentication journey
+      </p>
+
+      <form [formGroup]="registerForm">
+
+        <!-- EMAIL -->
+
+        <label class="auth-label">
+          Email address
+        </label>
+
+        <ion-item
+          lines="none"
+          class="auth-input">
+
+          <ion-input
+            type="email"
+            placeholder="Enter your email"
+            formControlName="email">
+          </ion-input>
+
+        </ion-item>
+
+        <p
+          class="auth-error"
+          *ngIf="
+          registerForm.get('email')?.touched &&
+          registerForm.get('email')?.invalid
+          ">
+
+          Enter a valid email
+
+        </p>
+
+        <!-- ROLE -->
+
+        <label class="auth-label">
+          Select role
+        </label>
+
+        <div
+          class="custom-role-select"
+          (click)="toggleRoleDropdown()">
+
+          <span
+            [class.placeholder]="!selectedRole">
+
+            {{ selectedRole || 'Choose your role' }}
+
+          </span>
+
+          <ion-icon
+            name="chevron-down-outline">
+          </ion-icon>
+
+        </div>
+
+        <div
+          class="role-dropdown"
+          *ngIf="showRoleDropdown">
+
+          <div
+            class="role-option"
+            (click)="selectRole('Influencer')">
+
+            Influencer
+
+          </div>
+
+          <div
+            class="role-option"
+            (click)="selectRole('Brand')">
+
+            Brand
+
+          </div>
+
+        </div>
+
+        <p
+          class="auth-error"
+          *ngIf="
+          registerForm.get('role')?.touched &&
+          registerForm.get('role')?.invalid
+          ">
+
+          Please select a role
+
+        </p>
+
+        <!-- BUTTON -->
+
+        <ion-button
+          expand="block"
+          class="auth-button"
+          [disabled]="registerForm.invalid"
+          (click)="register()">
+
+          Continue
+
+        </ion-button>
+
+        <!-- FOOTER -->
+
+        <div class="auth-footer">
+
+          Already have an account?
+
+          <span routerLink="/login">
+            Login
+          </span>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</ion-content>

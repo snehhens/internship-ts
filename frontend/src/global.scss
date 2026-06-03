@@ -1,0 +1,550 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+/* ========================================
+   AUTH DESIGN SYSTEM
+======================================== */
+
+:root {
+
+  --auth-gradient-primary:
+    linear-gradient(
+      135deg,
+      #7c3aed,
+      #d946ef
+    );
+
+  --auth-bg-gradient:
+    linear-gradient(
+      135deg,
+      #f8fafc 0%,
+      #eef2ff 40%,
+      #fdf4ff 100%
+    );
+
+  --auth-text-dark: #0f172a;
+
+  --auth-text-light: #64748b;
+
+  --auth-border: #e2e8f0;
+}
+
+/* ========================================
+   AUTH LAYOUT
+======================================== */
+
+.auth-container {
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: var(--auth-bg-gradient);
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.auth-container::before {
+
+  content: '';
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  background:
+    rgba(168,85,247,0.12);
+
+  border-radius: 50%;
+
+  top: -100px;
+  right: -100px;
+
+  filter: blur(40px);
+}
+
+.auth-container::after {
+
+  content: '';
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  background:
+    rgba(59,130,246,0.10);
+
+  border-radius: 50%;
+
+  bottom: -120px;
+  left: -120px;
+
+  filter: blur(50px);
+}
+
+/* ========================================
+   CARD
+======================================== */
+
+.auth-card {
+
+  width: 100%;
+  max-width: 430px;
+
+  position: relative;
+  z-index: 2;
+
+  background:
+    rgba(255,255,255,0.78);
+
+  backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,0.4);
+
+  border-radius: 34px;
+
+  padding: 36px 28px;
+
+  box-shadow:
+    0 10px 40px rgba(15,23,42,0.08);
+}
+
+/* ========================================
+   LOGO
+======================================== */
+
+.auth-logo {
+
+  width: 72px;
+  height: 72px;
+
+  border-radius: 24px;
+
+  background:
+    var(--auth-gradient-primary);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 28px;
+
+  color: white;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  box-shadow:
+    0 12px 24px rgba(124,58,237,0.25);
+}
+
+/* ========================================
+   TYPOGRAPHY
+======================================== */
+
+.auth-title {
+
+  font-size: 42px;
+
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: -2px;
+
+  color: var(--auth-text-dark);
+
+  text-align: center;
+
+  margin-bottom: 12px;
+}
+
+.auth-subtitle {
+
+  text-align: center;
+
+  color: var(--auth-text-light);
+
+  font-size: 16px;
+
+  line-height: 1.7;
+
+  margin-bottom: 36px;
+}
+
+.auth-label {
+
+  display: block;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #1e293b;
+
+  margin:
+    0 0 10px 4px;
+}
+
+/* ========================================
+   INPUTS
+======================================== */
+
+.auth-input {
+
+  --background:
+    rgba(255,255,255,0.72);
+
+  border:
+    1.5px solid var(--auth-border);
+
+  border-radius: 20px;
+
+  margin-bottom: 20px;
+
+  --padding-start: 18px;
+
+  --min-height: 58px;
+
+  transition: 0.3s ease;
+}
+
+.auth-input.item-has-focus {
+
+  border-color: #a855f7;
+
+  box-shadow:
+    0 0 0 4px rgba(168,85,247,0.08);
+}
+
+.auth-input ion-input,
+.auth-input ion-select {
+
+  --color: #0f172a;
+
+  font-size: 15px;
+}
+
+
+/* ========================================
+   CUSTOM ROLE DROPDOWN
+======================================== */
+
+.custom-role-select {
+
+  height: 58px;
+
+  border:
+    1.5px solid #d8b4fe;
+
+  border-radius: 20px;
+
+  background:
+    rgba(255,255,255,0.7);
+
+  padding: 0 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-size: 15px;
+
+  color: #64748b;
+
+  cursor: pointer;
+
+  margin-bottom: 18px;
+
+  transition: 0.25s ease;
+}
+
+.custom-role-select:active {
+
+  transform: scale(0.99);
+}
+
+.role-dropdown {
+
+  background:
+    rgba(255,255,255,0.75);
+
+  backdrop-filter: blur(16px);
+
+  border:
+    1px solid rgba(255,255,255,0.4);
+
+  border-radius: 24px;
+
+  padding: 10px;
+
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 10px 30px rgba(15,23,42,0.08);
+}
+
+.role-option {
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  font-size: 15px;
+
+  color: #0f172a;
+
+  transition: 0.2s ease;
+}
+
+.role-option:active {
+
+  background:
+    rgba(168,85,247,0.08);
+}
+
+/* ========================================
+   SELECT DROPDOWN
+======================================== */
+
+ion-alert.custom-role-alert {
+
+  --backdrop-opacity: 0.6;
+}
+
+.custom-role-alert .alert-wrapper {
+
+  border-radius: 24px !important;
+
+  backdrop-filter: blur(18px);
+
+  background:
+    rgba(255,255,255,0.92) !important;
+}
+
+.custom-role-alert .alert-radio-label {
+
+  font-size: 16px !important;
+
+  color: #0f172a !important;
+}
+
+/* ========================================
+   BUTTON
+======================================== */
+
+.auth-button {
+
+  margin-top: 14px;
+
+  height: 58px;
+
+  --border-radius: 20px;
+
+  --background:
+    var(--auth-gradient-primary);
+
+  font-weight: 600;
+
+  font-size: 16px;
+
+  text-transform: none;
+
+  letter-spacing: 0.2px;
+
+  box-shadow:
+    0 12px 28px rgba(124,58,237,0.24);
+}
+
+.auth-button.button-disabled {
+
+  opacity: 0.45;
+}
+
+/* ========================================
+   ERRORS
+======================================== */
+
+.auth-error {
+
+  color: #ef4444;
+
+  font-size: 13px;
+
+  margin:
+    -12px 0 18px 6px;
+}
+
+/* ========================================
+   FOOTER LINK
+======================================== */
+
+.auth-footer {
+
+  margin-top: 28px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 15px;
+}
+
+.auth-footer span {
+
+  color: #7c3aed;
+
+  font-weight: 600;
+}
+
+/* ========================================
+   OTP
+======================================== */
+
+.otp-wrapper {
+
+  display: flex;
+
+  justify-content: center;
+
+  margin:
+    20px 0 28px;
+}
+
+ion-input-otp {
+
+  --border-radius: 18px;
+
+  --border-color: #d8b4fe;
+
+  --highlight-color-focused: #8b5cf6;
+
+  --background:
+    rgba(255,255,255,0.85);
+
+  --color: #0f172a;
+
+  color: #0f172a;
+
+  min-height: 58px;
+}
+
+/* OTP INPUT BOXES */
+
+ion-input-otp input {
+
+  color: #0f172a !important;
+
+  font-size: 22px !important;
+
+  font-weight: 600 !important;
+
+  text-align: center !important;
+
+  background:
+    rgba(255,255,255,0.9) !important;
+
+  border-radius: 18px !important;
+
+  border:
+    1.5px solid #d8b4fe !important;
+
+  width: 58px !important;
+
+  height: 58px !important;
+
+  margin: 0 6px !important;
+
+  transition: 0.25s ease;
+}
+
+ion-input-otp input:focus {
+
+  border-color: #8b5cf6 !important;
+
+  box-shadow:
+    0 0 0 4px rgba(168,85,247,0.10) !important;
+
+  outline: none !important;
+}
+
+/* RESEND */
+
+.otp-resend {
+
+  text-align: center;
+
+  margin-top: 22px;
+
+  font-size: 14px;
+
+  color: #64748b;
+}
+
+.resend-active {
+
+  color: #7c3aed;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+
+
+/* all input text visible properly */
+ion-textarea textarea {
+
+  color: #0f172a !important;
+
+}
+
+ion-input input {
+
+  color: #0f172a !important;
+
+}
