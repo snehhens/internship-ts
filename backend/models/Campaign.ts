@@ -1,14 +1,33 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const campaignSchema = new mongoose.Schema({
+export interface ICampaign extends Document {
+    brandName: string;
+    campaignTitle: string;
+    description: string;
+    category: string;
+    platform: string;
+    budgetPerInfluencer: number;
+    totalSlots: number;
+    filledSlots: number;
+    startDate: Date;
+    endDate: Date;
+    brandId: mongoose.Types.ObjectId;
+    status: 'active' | 'closed' | 'draft';
+    applicationCount: number;
+    applications: {
+        influencerId: mongoose.Types.ObjectId;
+        appliedAt: Date;
+    }[];
+    createdAt?: Date;
+    updatedAt?: Date;
+}
 
+const campaignSchema = new Schema<ICampaign>({
 
     brandName: {
         type: String,
         required: true
     },
-
-
 
     campaignTitle: {
         type: String,
@@ -65,18 +84,27 @@ const campaignSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: [
-            'active',
-            'closed',
-            'draft'
-        ],
+        enum: ['active', 'closed', 'draft'],
         default: 'active'
     },
 
     applicationCount: {
         type: Number,
         default: 0
-    }
+    },
+
+    applications: [
+        {
+            influencerId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            appliedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 
 }, {
 
@@ -84,11 +112,7 @@ const campaignSchema = new mongoose.Schema({
 
 });
 
-const Campaign = mongoose.model(
-    'Campaign',
-    campaignSchema
-);
+const Campaign = mongoose.model<ICampaign>('Campaign', campaignSchema);
 
 export default Campaign;
-
-export { };
+    

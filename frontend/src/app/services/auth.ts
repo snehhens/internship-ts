@@ -7,6 +7,8 @@ import {
   LoginData
 } from '../interfaces/auth.interface';
 
+import { ProfileDetailsResponse } from '../interfaces/profile.interface';
+
 import {
   RegisterResponse,
   AuthResponse,
@@ -71,6 +73,21 @@ export class AuthService {
     return this.http.get(
       `${this.api}/profile`,
       { headers }
+    );
+
+  }
+
+  getProfileDetails() {
+
+    const token = localStorage.getItem('token');
+
+    return this.http.get<ProfileDetailsResponse>(
+      'http://localhost:5000/api/profile/details',
+      {
+        headers: {
+          Authorization: token || ''
+        }
+      }
     );
 
   }

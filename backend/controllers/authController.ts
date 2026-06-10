@@ -91,13 +91,16 @@ export const verifyOtp = async (req: Request, res: Response) => {
     }
 
 
-    if (new Date() > user.otpExpires) {
+
+    if ( !user.otpExpires || new Date() > user.otpExpires) {
 
       return res.status(400).json({
         message: "OTP Expired"
       });
 
     }
+
+     
 
     if (String(user.otp) !== String(otp)) {
       return res.status(400).json({

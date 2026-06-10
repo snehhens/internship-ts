@@ -1,3 +1,6 @@
+import path from 'path';
+import uploadRoutes
+from './routes/uploadRoutes';
 import express, {
   Request,
   Response
@@ -57,6 +60,18 @@ app.use(
 app.use(
   '/api/campaign',
   campaignRoutes
+);
+
+app.use(
+  '/uploads',
+  express.static(
+    path.join(__dirname, 'uploads')
+  )
+);
+
+app.use(
+  '/api/upload',
+  uploadRoutes
 );
 
 app.get(
