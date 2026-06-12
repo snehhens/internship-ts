@@ -15,6 +15,7 @@ export interface IInfluencerProfile extends Document {
   youtubeFollowers?: number;
   twitter?: string;
   twitterFollowers?: number;
+  profileImage?: string;
 }
 
 const influencerProfileSchema =
@@ -45,7 +46,9 @@ const influencerProfileSchema =
 
     twitter: String,
 
-    twitterFollowers: Number
+    twitterFollowers: Number,
+
+    profileImage: String,
 
   });
 

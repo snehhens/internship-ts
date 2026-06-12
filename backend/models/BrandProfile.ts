@@ -13,6 +13,7 @@ export interface IBrandProfile extends Document {
   industry?: string[];
   budgetMin?: number;
   budgetMax?: number;
+  companyLogo?: string;
 }
 
 const brandProfileSchema =
@@ -39,7 +40,9 @@ const brandProfileSchema =
 
     budgetMin: Number,
 
-    budgetMax: Number
+    budgetMax: Number,
+
+    companyLogo: String
 
   });
 

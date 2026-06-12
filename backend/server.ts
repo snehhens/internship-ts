@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import path from 'path';
 import uploadRoutes
 from './routes/uploadRoutes';
@@ -13,7 +16,7 @@ import mongoose from 'mongoose';
 
 import cors from 'cors';
 
-import dotenv from 'dotenv';
+
 
 import authRoutes
 from './routes/authRoutes';
@@ -22,7 +25,6 @@ import profileRoutes
 from './routes/profileRoutes';
 
 
-dotenv.config();
 
 const app = express();
 
@@ -72,6 +74,13 @@ app.use(
 app.use(
   '/api/upload',
   uploadRoutes
+);
+
+app.use(
+  '/uploads',
+  express.static(
+    path.join(__dirname, 'uploads')
+  )
 );
 
 app.get(

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
 
-    
+
     <ion-title>
       {{ user?.role === 'brand'
       ? 'Brand Dashboard'
@@ -24,7 +24,7 @@
       </ion-button>
 
     </ion-buttons>
-    
+
 
   </ion-toolbar>
 </ion-header>
@@ -32,110 +32,211 @@
 <ion-content class="home-page" [fullscreen]="true">
 
   <div *ngIf="profileDetails">
+    <div style="text-align:center">
 
-  <p>
-    <strong>Email:</strong>
-    {{ profileDetails?.user?.email }}
-  </p>
+      <img *ngIf="
+      $any(profileDetails?.profile)?.profileImage ||
+      $any(profileDetails?.profile)?.companyLogo
+    " [src]="
 
-  <p>
-    <strong>Role:</strong>
-    {{ profileDetails?.user?.role }}
-  </p>
+      'http://localhost:5000' +
 
-  <!-- BRAND DETAILS -->
+      (
 
-  <div *ngIf="user?.role === 'brand'">
+        $any(profileDetails?.profile)?.profileImage ||
 
+        $any(profileDetails?.profile)?.companyLogo
+
+      )
+
+    " width="120" height="120" style="
+      border-radius:50%;
+      object-fit:cover;
+    ">
+
+      <br><br>
+
+      <input type="file" accept="image/*" (change)="onImageSelected($event)">
+
+
+    </div>
     <p>
-      <strong>First Name:</strong>
-      {{ $any(profileDetails.profile)?.firstName || '-' }}
+      <strong>Email:</strong>
+      {{ profileDetails?.user?.email }}
     </p>
 
     <p>
-      <strong>Last Name:</strong>
-      {{ $any(profileDetails.profile)?.lastName || '-' }}
+      <strong>Role:</strong>
+      {{ profileDetails?.user?.role }}
     </p>
 
-    <p>
-      <strong>Contact Number:</strong>
-      {{ $any(profileDetails.profile)?.contactNumber || '-' }}
-    </p>
+    <!-- BRAND DETAILS -->
 
-    <p>
-      <strong>Website:</strong>
-      {{ $any(profileDetails.profile)?.website || '-' }}
-    </p>
+    <div *ngIf="user?.role === 'brand'">
 
-    <p>
-      <strong>Brand Description:</strong>
-      {{ $any(profileDetails.profile)?.brandDescription || '-' }}
-    </p>
+      <p>
+        <strong>First Name:</strong>
+        {{ $any(profileDetails.profile)?.firstName || '-' }}
+      </p>
 
-    <p>
-      <strong>Industry:</strong>
-      {{ $any(profileDetails.profile)?.industry?.join(', ') || '-' }}
-    </p>
+      <p>
+        <strong>Last Name:</strong>
+        {{ $any(profileDetails.profile)?.lastName || '-' }}
+      </p>
 
-    <p>
-      <strong>Budget Range:</strong>
-      ₹{{ $any(profileDetails.profile)?.budgetMin || 0 }}
-      -
-      ₹{{ $any(profileDetails.profile)?.budgetMax || 0 }}
-    </p>
+      <p>
+        <strong>Contact Number:</strong>
+        {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+      </p>
+
+      <p>
+        <strong>Website:</strong>
+        {{ $any(profileDetails.profile)?.website || '-' }}
+      </p>
+
+      <p>
+        <strong>Brand Description:</strong>
+        {{ $any(profileDetails.profile)?.brandDescription || '-' }}
+      </p>
+
+      <p>
+        <strong>Industry:</strong>
+        {{ $any(profileDetails.profile)?.industry?.join(', ') || '-' }}
+      </p>
+
+      <p>
+        <strong>Budget Range:</strong>
+        ₹{{ $any(profileDetails.profile)?.budgetMin || 0 }}
+        -
+        ₹{{ $any(profileDetails.profile)?.budgetMax || 0 }}
+      </p>
+
+    </div>
+
+    <!-- INFLUENCER DETAILS -->
+
+    <div *ngIf="user?.role === 'influencer'">
+
+      <p>
+        <strong>Username:</strong>
+        {{ $any(profileDetails.profile)?.username || '-' }}
+      </p>
+
+      <p>
+        <strong>Bio:</strong>
+        {{ $any(profileDetails.profile)?.bio || '-' }}
+      </p>
+
+      <p>
+        <strong>Category:</strong>
+        {{ $any(profileDetails.profile)?.category || '-' }}
+      </p>
+
+      <p>
+        <strong>Country:</strong>
+        {{ $any(profileDetails.profile)?.country || '-' }}
+      </p>
+
+      <p>
+        <strong>Contact Number:</strong>
+        {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+      </p>
+
+      <p>
+        <strong>Instagram Followers:</strong>
+        {{ $any(profileDetails.profile)?.instagramFollowers || 0 }}
+      </p>
+
+      <p>
+        <strong>YouTube Followers:</strong>
+        {{ $any(profileDetails.profile)?.youtubeFollowers || 0 }}
+      </p>
+
+      <p>
+        <strong>Twitter Followers:</strong>
+        {{ $any(profileDetails.profile)?.twitterFollowers || 0 }}
+      </p>
+
+    </div>
 
   </div>
 
-  <!-- INFLUENCER DETAILS -->
+  <!--portfolio-->
 
-  <div *ngIf="user?.role === 'influencer'">
+  <ion-card *ngIf="user?.role === 'influencer'">
 
-    <p>
-      <strong>Username:</strong>
-      {{ $any(profileDetails.profile)?.username || '-' }}
-    </p>
+    <ion-card-header>
 
-    <p>
-      <strong>Bio:</strong>
-      {{ $any(profileDetails.profile)?.bio || '-' }}
-    </p>
+      <ion-card-title>
+        Portfolio
+      </ion-card-title>
 
-    <p>
-      <strong>Category:</strong>
-      {{ $any(profileDetails.profile)?.category || '-' }}
-    </p>
+    </ion-card-header>
 
-    <p>
-      <strong>Country:</strong>
-      {{ $any(profileDetails.profile)?.country || '-' }}
-    </p>
+    <ion-card-content>
 
-    <p>
-      <strong>Contact Number:</strong>
-      {{ $any(profileDetails.profile)?.contactNumber || '-' }}
-    </p>
+      <input type="file" (change)="onPortfolioSelected($event)" accept="image/*,video/*" />
 
-    <p>
-      <strong>Instagram Followers:</strong>
-      {{ $any(profileDetails.profile)?.instagramFollowers || 0 }}
-    </p>
+      <p *ngIf="uploadingPortfolio">
+        Uploading...
+      </p>
 
-    <p>
-      <strong>YouTube Followers:</strong>
-      {{ $any(profileDetails.profile)?.youtubeFollowers || 0 }}
-    </p>
+    </ion-card-content>
 
-    <p>
-      <strong>Twitter Followers:</strong>
-      {{ $any(profileDetails.profile)?.twitterFollowers || 0 }}
-    </p>
+  </ion-card>
 
-  </div>
+  <ion-card *ngIf="
+    user?.role === 'influencer' &&
+    portfolioItems.length
+  ">
 
-</div>
+    <ion-card-header>
+
+      <ion-card-title>
+        My Portfolio
+      </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <div *ngFor="
+        let item of portfolioItems
+      ">
+
+        <img *ngIf="
+          item.fileType === 'image'
+        " [src]="
+          'http://localhost:5000' +
+          item.fileUrl
+        " width="250" />
+
+        <video *ngIf="
+          item.fileType === 'video'
+        " width="250" controls>
+
+          <source [src]="
+            'http://localhost:5000' +
+            item.fileUrl
+          " />
+
+        </video>
+
+        <p>
+          {{ item.originalName }}
+        </p>
+
+        <hr>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
   <!-- BRAND TABS -->
 
-  <ion-segment ``` *ngIf="user?.role === 'brand'" value="live" (ionChange)="selectTab($event.detail.value || 'live')">
+  <ion-segment  *ngIf="user?.role === 'brand'" value="live" (ionChange)="selectTab($event.detail.value || 'live')">
 
     <ion-segment-button value="live">
 
@@ -152,7 +253,7 @@
       </ion-label>
 
     </ion-segment-button>
-    
+
 
   </ion-segment>
 
@@ -160,7 +261,7 @@
 
   <ion-card *ngIf="selectedTab === 'live'">
 
-    
+
     <ion-card-header>
 
       <ion-card-title>
@@ -326,13 +427,13 @@
       </div>
 
     </ion-card-content>
-    
+
 
   </ion-card>
 
   <!-- CREATE CAMPAIGN -->
 
-  <ion-card ``` *ngIf="
+  <ion-card  *ngIf="
   selectedTab === 'create'
   &&
   user?.role === 'brand'
@@ -529,7 +630,7 @@
       </ion-text>
 
     </ion-card-content>
-    
+
 
   </ion-card>
 

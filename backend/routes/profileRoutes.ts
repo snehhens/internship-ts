@@ -2,8 +2,10 @@ import express from 'express';
 
 import {
   completeProfile,
-  getMyProfileDetails
+  getMyProfileDetails,
+  updateProfileImage
 } from '../controllers/profileController';
+
 
 import authMiddleware from '../middleware/authMiddleware';
 
@@ -18,6 +20,11 @@ router.get(
   '/details',
   authMiddleware,
   getMyProfileDetails
+);
+
+router.put(
+  '/image',
+  updateProfileImage
 );
 
 export default router;

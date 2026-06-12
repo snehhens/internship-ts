@@ -170,3 +170,78 @@ export const getMyProfileDetails = async (
   }
 
 };
+
+export const updateProfileImage = async (
+  req: Request,
+  res: Response
+) => {
+
+  try {
+
+    const {
+      userId,
+      imageUrl
+    } = req.body;
+
+    const user =
+      await User.findById(userId);
+
+    if (!user) {
+
+      return res.status(404).json({
+        message: 'User not found'
+      });
+
+    }
+
+    if (user.role === 'influencer') {
+
+      await InfluencerProfile.findOneAndUpdate(
+
+        { userId },
+
+        {
+          profileImage: imageUrl
+        }
+
+      );
+
+    }
+
+    if (user.role === 'brand') {
+
+      await BrandProfile.findOneAndUpdate(
+
+        { userId },
+
+        {
+          companyLogo: imageUrl
+        }
+
+      );
+
+    }
+
+    return res.status(200).json({
+
+      message:
+        'Image saved successfully'
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.log(error);
+
+    return res.status(500).json({
+
+      message:
+        'Server error'
+
+    });
+
+  }
+
+};

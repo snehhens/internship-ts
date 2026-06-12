@@ -10,6 +10,9 @@ import {
 } from 'src/app/interfaces/campaign.interface';
 import { ProfileDetailsResponse } from 'src/app/interfaces/profile.interface';
 
+import { UploadService } from
+  'src/app/services/upload.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -27,6 +30,12 @@ export class HomePage implements OnInit {
   selectedTab = 'live';
 
   campaigns: CampaignItem[] = [];
+
+  selectedImageUrl = '';
+
+  portfolioItems: any[] = [];
+
+  uploadingPortfolio = false;
 
   loading = false;
 
@@ -52,6 +61,7 @@ export class HomePage implements OnInit {
   constructor(
     private auth: AuthService,
     private campaignService: CampaignService,
+    private uploadService: UploadService,
     private router: Router
   ) { }
 
@@ -60,6 +70,8 @@ export class HomePage implements OnInit {
       next: (res: any) => {
         this.user = res;
         this.loadCampaigns();
+
+        this.loadPortfolio();
       },
       error: () => {
         this.router.navigate(['/login']);
@@ -222,5 +234,187 @@ export class HomePage implements OnInit {
 
     return Math.max(0, Math.ceil(difference / (1000 * 60 * 60 * 24)));
   }
+
+
+
+  onImageSelected(
+    event: any
+  ) {
+
+    const file =
+      event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    this.uploadService
+      .uploadProfileImage(file)
+      .subscribe({
+
+        next: (response: any) => {
+
+          const imageUrl =
+            response.fileUrl;
+
+          this.selectedImageUrl = imageUrl;
+
+          this.uploadService
+            .saveProfileImage(
+
+              this.user._id,
+
+              imageUrl
+
+            )
+            .subscribe({
+
+              next: () => {
+
+                this.message =
+                  'Image uploaded successfully';
+
+                this.auth
+                  .getProfileDetails()
+                  .subscribe({
+
+                    next: (res) => {
+
+                      this.profileDetails =
+                        res;
+
+                    }
+
+                  });
+
+              },
+
+              error: () => {
+
+                this.errorMessage =
+                  'Could not save image';
+
+              }
+
+            });
+
+        },
+
+        error: () => {
+
+          this.errorMessage =
+            'Upload failed';
+
+        }
+
+      });
+
+  }
+
+  onPortfolioSelected(
+    event: any
+  ) {
+
+    const file =
+      event.target.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    this.uploadingPortfolio = true;
+
+    this.uploadService
+      .uploadPortfolioMedia(file)
+      .subscribe({
+
+        next: (response: any) => {
+
+          this.uploadService
+            .savePortfolio({
+
+              userId:
+                this.user._id,
+
+              fileUrl:
+                response.fileUrl,
+
+              fileType:
+                response.fileType,
+
+              originalName:
+                response.originalName
+
+            })
+            .subscribe({
+
+              next: () => {
+
+                this.message =
+                  'Portfolio uploaded successfully';
+
+                this.uploadingPortfolio =
+                  false;
+
+                this.loadPortfolio();
+
+              },
+
+              error: () => {
+
+                this.uploadingPortfolio =
+                  false;
+
+                this.errorMessage =
+                  'Could not save portfolio';
+
+              }
+
+            });
+
+        },
+
+        error: () => {
+
+          this.uploadingPortfolio =
+            false;
+
+          this.errorMessage =
+            'Upload failed';
+
+        }
+
+      });
+
+  }
+
+  loadPortfolio() {
+
+    if (!this.user?._id) {
+      return;
+    }
+
+    this.uploadService
+      .getPortfolio(this.user._id)
+      .subscribe({
+
+        next: (res: any) => {
+
+          this.portfolioItems = res;
+
+        },
+
+        error: () => {
+
+          console.log(
+            'Portfolio load failed'
+          );
+
+        }
+
+      });
+
+  }
+
 
 }

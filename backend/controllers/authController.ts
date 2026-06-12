@@ -6,6 +6,10 @@ import {
 } from 'express-validator';
 
 import {
+  sendOTPEmail
+} from '../utils/sendEmail';
+
+import {
   Request,
   Response
 } from 'express';
@@ -59,9 +63,13 @@ export const register = async (req: Request, res: Response) => {
 
     await user.save();
 
-    return res.status(201).json({
-      message: "Registered Successfully",
+    await sendOTPEmail(
+      email,
       otp
+    );
+
+    return res.status(201).json({
+      message: "OTP sent successfully"
     });
 
   } catch (error) {
@@ -92,7 +100,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
 
 
 
-    if ( !user.otpExpires || new Date() > user.otpExpires) {
+    if (!user.otpExpires || new Date() > user.otpExpires) {
 
       return res.status(400).json({
         message: "OTP Expired"
@@ -100,7 +108,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
 
     }
 
-     
+
 
     if (String(user.otp) !== String(otp)) {
       return res.status(400).json({
@@ -150,9 +158,13 @@ export const resendOtp = async (req: Request, res: Response) => {
 
     await user.save();
 
-    res.json({
-      message: "OTP Resent Successfully",
+    await sendOTPEmail(
+      email,
       otp
+    );
+
+    res.json({
+      message: "OTP Resent Successfully"
     });
 
   } catch (error) {
