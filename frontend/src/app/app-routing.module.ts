@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {
+  PreloadAllModules,
+  RouterModule,
+  Routes
+} from '@angular/router';
+
 import { AuthGuard } from './guards/auth-guard';
+import { ProfileGuard } from './guards/profile.guard';
 
 const routes: Routes = [
   {
@@ -31,6 +37,7 @@ const routes: Routes = [
   },
   {
     path: 'profile',
+    canActivate: [ProfileGuard],
     loadChildren: () =>
       import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
   },
@@ -42,7 +49,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules
+    })
+  ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
