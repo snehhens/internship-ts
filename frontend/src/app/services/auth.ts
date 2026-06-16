@@ -8,6 +8,7 @@ import {
 } from '../interfaces/auth.interface';
 
 import { ProfileDetailsResponse } from '../interfaces/profile.interface';
+import { environment } from 'src/environments/environment';
 
 import {
   RegisterResponse,
@@ -20,7 +21,7 @@ import {
 })
 export class AuthService {
 
-  api = 'http://localhost:5000/api/auth';
+  api = `${environment.apiUrl}/auth`;
 
   constructor(private http: HttpClient) { }
 
@@ -82,7 +83,7 @@ export class AuthService {
     const token = localStorage.getItem('token');
 
     return this.http.get<ProfileDetailsResponse>(
-      'http://localhost:5000/api/profile/details',
+      `${environment.apiUrl}/profile/details`,
       {
         headers: {
           Authorization: token || ''
@@ -96,7 +97,7 @@ export class AuthService {
 
     return this.http.post(
 
-      'http://localhost:5000/api/profile/complete-profile',
+      `${environment.apiUrl}/profile/complete-profile`,
 
       data
 

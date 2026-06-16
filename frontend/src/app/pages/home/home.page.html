@@ -31,21 +31,22 @@
 
 <ion-content class="home-page" [fullscreen]="true">
 
-  <div *ngIf="profileDetails">
-    <div style="text-align:center">
+  @if (profileDetails) {
+    <div>
+      <div style="text-align:center">
+        @if (
+          $any(profileDetails.profile)?.profileImage ||
+          $any(profileDetails.profile)?.companyLogo
+          ) {
+<img [src]="
 
-      <img *ngIf="
-      $any(profileDetails?.profile)?.profileImage ||
-      $any(profileDetails?.profile)?.companyLogo
-    " [src]="
-
-      'http://localhost:5000' +
+      serverUrl +
 
       (
 
-        $any(profileDetails?.profile)?.profileImage ||
+        $any(profileDetails.profile)?.profileImage ||
 
-        $any(profileDetails?.profile)?.companyLogo
+        $any(profileDetails.profile)?.companyLogo
 
       )
 
@@ -53,344 +54,271 @@
       border-radius:50%;
       object-fit:cover;
     ">
-
-      <br><br>
-
-      <input type="file" accept="image/*" (change)="onImageSelected($event)">
-
-
+        }
+        <br><br>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)">
+      </div>
+      <p>
+        <strong>Email:</strong>
+        {{ profileDetails.user.email }}
+      </p>
+      <p>
+        <strong>Role:</strong>
+        {{ profileDetails.user.role }}
+      </p>
+      <!-- BRAND DETAILS -->
+      @if (user?.role === 'brand') {
+        <div>
+          <p>
+            <strong>First Name:</strong>
+            {{ $any(profileDetails.profile)?.firstName || '-' }}
+          </p>
+          <p>
+            <strong>Last Name:</strong>
+            {{ $any(profileDetails.profile)?.lastName || '-' }}
+          </p>
+          <p>
+            <strong>Contact Number:</strong>
+            {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+          </p>
+          <p>
+            <strong>Website:</strong>
+            {{ $any(profileDetails.profile)?.website || '-' }}
+          </p>
+          <p>
+            <strong>Brand Description:</strong>
+            {{ $any(profileDetails.profile)?.brandDescription || '-' }}
+          </p>
+          <p>
+            <strong>Industry:</strong>
+            {{ $any(profileDetails.profile)?.industry?.join(', ') || '-' }}
+          </p>
+          <p>
+            <strong>Budget Range:</strong>
+            ₹{{ $any(profileDetails.profile)?.budgetMin || 0 }}
+            -
+            ₹{{ $any(profileDetails.profile)?.budgetMax || 0 }}
+          </p>
+        </div>
+      }
+      <!-- INFLUENCER DETAILS -->
+      @if (user?.role === 'influencer') {
+        <div>
+          <p>
+            <strong>Username:</strong>
+            {{ $any(profileDetails.profile)?.username || '-' }}
+          </p>
+          <p>
+            <strong>Bio:</strong>
+            {{ $any(profileDetails.profile)?.bio || '-' }}
+          </p>
+          <p>
+            <strong>Category:</strong>
+            {{ $any(profileDetails.profile)?.category || '-' }}
+          </p>
+          <p>
+            <strong>Country:</strong>
+            {{ $any(profileDetails.profile)?.country || '-' }}
+          </p>
+          <p>
+            <strong>Contact Number:</strong>
+            {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+          </p>
+          <p>
+            <strong>Instagram Followers:</strong>
+            {{ $any(profileDetails.profile)?.instagramFollowers || 0 }}
+          </p>
+          <p>
+            <strong>YouTube Followers:</strong>
+            {{ $any(profileDetails.profile)?.youtubeFollowers || 0 }}
+          </p>
+          <p>
+            <strong>Twitter Followers:</strong>
+            {{ $any(profileDetails.profile)?.twitterFollowers || 0 }}
+          </p>
+        </div>
+      }
     </div>
-    <p>
-      <strong>Email:</strong>
-      {{ profileDetails?.user?.email }}
-    </p>
-
-    <p>
-      <strong>Role:</strong>
-      {{ profileDetails?.user?.role }}
-    </p>
-
-    <!-- BRAND DETAILS -->
-
-    <div *ngIf="user?.role === 'brand'">
-
-      <p>
-        <strong>First Name:</strong>
-        {{ $any(profileDetails.profile)?.firstName || '-' }}
-      </p>
-
-      <p>
-        <strong>Last Name:</strong>
-        {{ $any(profileDetails.profile)?.lastName || '-' }}
-      </p>
-
-      <p>
-        <strong>Contact Number:</strong>
-        {{ $any(profileDetails.profile)?.contactNumber || '-' }}
-      </p>
-
-      <p>
-        <strong>Website:</strong>
-        {{ $any(profileDetails.profile)?.website || '-' }}
-      </p>
-
-      <p>
-        <strong>Brand Description:</strong>
-        {{ $any(profileDetails.profile)?.brandDescription || '-' }}
-      </p>
-
-      <p>
-        <strong>Industry:</strong>
-        {{ $any(profileDetails.profile)?.industry?.join(', ') || '-' }}
-      </p>
-
-      <p>
-        <strong>Budget Range:</strong>
-        ₹{{ $any(profileDetails.profile)?.budgetMin || 0 }}
-        -
-        ₹{{ $any(profileDetails.profile)?.budgetMax || 0 }}
-      </p>
-
-    </div>
-
-    <!-- INFLUENCER DETAILS -->
-
-    <div *ngIf="user?.role === 'influencer'">
-
-      <p>
-        <strong>Username:</strong>
-        {{ $any(profileDetails.profile)?.username || '-' }}
-      </p>
-
-      <p>
-        <strong>Bio:</strong>
-        {{ $any(profileDetails.profile)?.bio || '-' }}
-      </p>
-
-      <p>
-        <strong>Category:</strong>
-        {{ $any(profileDetails.profile)?.category || '-' }}
-      </p>
-
-      <p>
-        <strong>Country:</strong>
-        {{ $any(profileDetails.profile)?.country || '-' }}
-      </p>
-
-      <p>
-        <strong>Contact Number:</strong>
-        {{ $any(profileDetails.profile)?.contactNumber || '-' }}
-      </p>
-
-      <p>
-        <strong>Instagram Followers:</strong>
-        {{ $any(profileDetails.profile)?.instagramFollowers || 0 }}
-      </p>
-
-      <p>
-        <strong>YouTube Followers:</strong>
-        {{ $any(profileDetails.profile)?.youtubeFollowers || 0 }}
-      </p>
-
-      <p>
-        <strong>Twitter Followers:</strong>
-        {{ $any(profileDetails.profile)?.twitterFollowers || 0 }}
-      </p>
-
-    </div>
-
-  </div>
+  }
 
   <!--portfolio-->
 
-  <ion-card *ngIf="user?.role === 'influencer'">
+  @if (user?.role === 'influencer') {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Portfolio
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <input type="file" (change)="onPortfolioSelected($event)" accept="image/*,video/*" />
+        @if (uploadingPortfolio) {
+          <p>
+            Uploading...
+          </p>
+        }
+      </ion-card-content>
+    </ion-card>
+  }
 
-    <ion-card-header>
-
-      <ion-card-title>
-        Portfolio
-      </ion-card-title>
-
-    </ion-card-header>
-
-    <ion-card-content>
-
-      <input type="file" (change)="onPortfolioSelected($event)" accept="image/*,video/*" />
-
-      <p *ngIf="uploadingPortfolio">
-        Uploading...
-      </p>
-
-    </ion-card-content>
-
-  </ion-card>
-
-  <ion-card *ngIf="
+  @if (
     user?.role === 'influencer' &&
     portfolioItems.length
-  ">
-
-    <ion-card-header>
-
-      <ion-card-title>
-        My Portfolio
-      </ion-card-title>
-
-    </ion-card-header>
-
-    <ion-card-content>
-
-      <div *ngFor="
-        let item of portfolioItems
-      ">
-
-        <img *ngIf="
-          item.fileType === 'image'
-        " [src]="
-          'http://localhost:5000' +
+    ) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          My Portfolio
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        @for (
+          item of portfolioItems
+          ; track
+          item) {
+          <div>
+            @if (
+              item.fileType === 'image'
+              ) {
+<img [src]="
+          serverUrl +
           item.fileUrl
         " width="250" />
-
-        <video *ngIf="
-          item.fileType === 'video'
-        " width="250" controls>
-
+            }
+            @if (
+              item.fileType === 'video'
+              ) {
+              <video width="250" controls>
           <source [src]="
-            'http://localhost:5000' +
+            serverUrl +
             item.fileUrl
           " />
+                </video>
+              }
+              <p>
+                {{ item.originalName }}
+              </p>
+              <hr>
+              </div>
+            }
+          </ion-card-content>
+        </ion-card>
+      }
 
-        </video>
+      <!-- BRAND TABS -->
 
-        <p>
-          {{ item.originalName }}
-        </p>
+      @if (user?.role === 'brand') {
+        <ion-segment  value="live" (ionChange)="selectTab($event.detail.value || 'live')">
+          <ion-segment-button value="live">
+            <ion-label>
+              Live Campaigns
+            </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="create">
+            <ion-label>
+              Create Campaign
+            </ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      }
 
-        <hr>
+      <!-- LIVE CAMPAIGNS -->
 
-      </div>
-
-    </ion-card-content>
-
-  </ion-card>
-
-  <!-- BRAND TABS -->
-
-  <ion-segment  *ngIf="user?.role === 'brand'" value="live" (ionChange)="selectTab($event.detail.value || 'live')">
-
-    <ion-segment-button value="live">
-
-      <ion-label>
-        Live Campaigns
-      </ion-label>
-
-    </ion-segment-button>
-
-    <ion-segment-button value="create">
-
-      <ion-label>
-        Create Campaign
-      </ion-label>
-
-    </ion-segment-button>
-
-
-  </ion-segment>
-
-  <!-- LIVE CAMPAIGNS -->
-
-  <ion-card *ngIf="selectedTab === 'live'">
-
-
-    <ion-card-header>
-
-      <ion-card-title>
-        Campaigns
-      </ion-card-title>
-
-    </ion-card-header>
-
-    <ion-card-content>
-
-      <ion-text *ngIf="loading">
-        Loading campaigns...
-      </ion-text>
-
-      <div *ngIf="!loading">
-
-        <ion-card *ngFor="let campaign of campaigns">
-
+      @if (selectedTab === 'live') {
+        <ion-card>
           <ion-card-header>
-
             <ion-card-title>
-              {{ campaign.campaignTitle }}
+              Campaigns
             </ion-card-title>
-
-            <ion-card-subtitle>
-
-              {{ campaign.brandName }}
-
-            </ion-card-subtitle>
-
           </ion-card-header>
-
           <ion-card-content>
-
-            <p>
-              {{ campaign.description }}
-            </p>
-
-            <p>
-
-              {{ campaign.category }}
-              |
-              {{ campaign.platform }}
-
-            </p>
-
-            <p>
-
-              ₹{{ campaign.budgetPerInfluencer }}
-
-            </p>
-
-            <p>
-
-              Slots:
-              {{ campaign.filledSlots || 0 }}
-              /
-              {{ campaign.totalSlots }}
-
-            </p>
-
-            <p>
-
-              Days Left:
-              {{ daysLeft(campaign.endDate) }}
-
-            </p>
-
-            <p>
-
-              Applications:
-              {{
-              campaign.applications?.length || 0
-              }}
-              /
-              {{ campaign.totalSlots }}
-
-            </p>
-
-            <ion-badge color="success" *ngIf="
-            campaign.status === 'active'
-          ">
-
-              Active
-
-            </ion-badge>
-
-            <ion-badge color="medium" *ngIf="
-            campaign.status === 'closed'
-          ">
-
-              Closed
-
-            </ion-badge>
-
-            <!-- BRAND ACTIONS -->
-
-            <div *ngIf="user?.role === 'brand'">
-
+            @if (loading) {
+              <ion-text>
+                Loading campaigns...
+              </ion-text>
+            }
+            @if (!loading) {
+              <div>
+                @for (campaign of campaigns; track campaign) {
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-title>
+                        {{ campaign.campaignTitle }}
+                      </ion-card-title>
+                      <ion-card-subtitle>
+                        {{ campaign.brandName }}
+                      </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <p>
+                        {{ campaign.description }}
+                      </p>
+                      <p>
+                        {{ campaign.category }}
+                        |
+                        {{ campaign.platform }}
+                      </p>
+                      <p>
+                        ₹{{ campaign.budgetPerInfluencer }}
+                      </p>
+                      <p>
+                        Slots:
+                        {{ campaign.filledSlots || 0 }}
+                        /
+                        {{ campaign.totalSlots }}
+                      </p>
+                      <p>
+                        Days Left:
+                        {{ daysLeft(campaign.endDate) }}
+                      </p>
+                      <p>
+                        Applications:
+                        {{
+                        campaign.applications?.length || 0
+                        }}
+                        /
+                        {{ campaign.totalSlots }}
+                      </p>
+                      @if (
+                        campaign.status === 'active'
+                        ) {
+                        <ion-badge color="success">
+                          Active
+                        </ion-badge>
+                      }
+                      @if (
+                        campaign.status === 'closed'
+                        ) {
+                        <ion-badge color="medium">
+                          Closed
+                        </ion-badge>
+                      }
+                      <!-- BRAND ACTIONS -->
+                      @if (user?.role === 'brand') {
+                        <div>
               <ion-button size="small" color="success" (click)="
               changeCampaignStatus(
                 campaign,
                 'active'
               )
             ">
-
-                Activate
-
-              </ion-button>
-
+                            Activate
+                          </ion-button>
               <ion-button size="small" color="danger" (click)="
               changeCampaignStatus(
                 campaign,
                 'closed'
               )
             ">
-
-                Close
-
-              </ion-button>
-
-            </div>
-
-            <!-- INFLUENCER APPLY -->
-
-            <div *ngIf="
-            user?.role === 'influencer'
-          ">
-
+                            Close
+                          </ion-button>
+                        </div>
+                      }
+                      <!-- INFLUENCER APPLY -->
+                      @if (
+                        user?.role === 'influencer'
+                        ) {
+                        <div>
               <ion-button expand="block" color="primary" [disabled]="
               isApplied(campaign)
               ||
@@ -399,239 +327,160 @@
             " (click)="
               applyToCampaign(campaign)
             ">
-
-                {{
-
-                isApplied(campaign)
-                ? 'Applied'
-                : 'Apply'
-
-                }}
-
-              </ion-button>
-
-            </div>
-
+                            {{
+                            isApplied(campaign)
+                            ? 'Applied'
+                            : 'Apply'
+                            }}
+                          </ion-button>
+                        </div>
+                      }
+                    </ion-card-content>
+                  </ion-card>
+                }
+                @if (campaigns.length === 0) {
+                  <ion-item>
+                    <ion-label>
+                      No campaigns found.
+                    </ion-label>
+                  </ion-item>
+                }
+              </div>
+            }
           </ion-card-content>
-
         </ion-card>
+      }
 
-        <ion-item *ngIf="campaigns.length === 0">
+      <!-- CREATE CAMPAIGN -->
 
-          <ion-label>
-            No campaigns found.
-          </ion-label>
-
-        </ion-item>
-
-      </div>
-
-    </ion-card-content>
-
-
-  </ion-card>
-
-  <!-- CREATE CAMPAIGN -->
-
-  <ion-card  *ngIf="
-  selectedTab === 'create'
-  &&
-  user?.role === 'brand'
-">
-
-    <ion-card-header>
-
-      <ion-card-title>
-        Create Campaign
-      </ion-card-title>
-
-    </ion-card-header>
-
-    <ion-card-content>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Campaign Title
-        </ion-label>
-
+      @if (
+        selectedTab === 'create'
+        &&
+        user?.role === 'brand'
+        ) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Create Campaign
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="stacked">
+                Campaign Title
+              </ion-label>
         <ion-input [(ngModel)]="
         campaignForm.campaignTitle
       ">
-        </ion-input>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Description
-        </ion-label>
-
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Description
+              </ion-label>
         <ion-textarea [(ngModel)]="
         campaignForm.description
       ">
-        </ion-textarea>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Category
-        </ion-label>
-
+              </ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Category
+              </ion-label>
         <ion-select [(ngModel)]="
         campaignForm.category
       ">
-
-          <ion-select-option value="Fashion">
-
-            Fashion
-
-          </ion-select-option>
-
-          <ion-select-option value="Tech">
-
-            Tech
-
-          </ion-select-option>
-
-          <ion-select-option value="Food">
-
-            Food
-
-          </ion-select-option>
-
-          <ion-select-option value="Beauty">
-
-            Beauty
-
-          </ion-select-option>
-
-        </ion-select>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Platform
-        </ion-label>
-
+                <ion-select-option value="Fashion">
+                  Fashion
+                </ion-select-option>
+                <ion-select-option value="Tech">
+                  Tech
+                </ion-select-option>
+                <ion-select-option value="Food">
+                  Food
+                </ion-select-option>
+                <ion-select-option value="Beauty">
+                  Beauty
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Platform
+              </ion-label>
         <ion-select [(ngModel)]="
         campaignForm.platform
       ">
-
-          <ion-select-option value="Instagram">
-
-            Instagram
-
-          </ion-select-option>
-
-          <ion-select-option value="YouTube">
-
-            YouTube
-
-          </ion-select-option>
-
-          <ion-select-option value="Twitter">
-
-            Twitter
-
-          </ion-select-option>
-
-        </ion-select>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Budget Per Influencer
-        </ion-label>
-
+                <ion-select-option value="Instagram">
+                  Instagram
+                </ion-select-option>
+                <ion-select-option value="YouTube">
+                  YouTube
+                </ion-select-option>
+                <ion-select-option value="Twitter">
+                  Twitter
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Budget Per Influencer
+              </ion-label>
         <ion-input type="number" [(ngModel)]="
         campaignForm.budgetPerInfluencer
       ">
-
-        </ion-input>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Total Slots
-        </ion-label>
-
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Total Slots
+              </ion-label>
         <ion-input type="number" [(ngModel)]="
         campaignForm.totalSlots
       ">
-
-        </ion-input>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          Start Date
-        </ion-label>
-
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                Start Date
+              </ion-label>
         <ion-input type="date" [(ngModel)]="
         campaignForm.startDate
       ">
-
-        </ion-input>
-
-      </ion-item>
-
-      <ion-item>
-
-        <ion-label position="stacked">
-          End Date
-        </ion-label>
-
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked">
+                End Date
+              </ion-label>
         <ion-input type="date" [(ngModel)]="
         campaignForm.endDate
       ">
+              </ion-input>
+            </ion-item>
+            <ion-button expand="block" (click)="createCampaign()" [disabled]="saving">
+              {{
+              saving
+              ? 'Saving...'
+              : 'Create Campaign'
+              }}
+            </ion-button>
+            @if (message) {
+              <ion-text color="success">
+                <p>
+                  {{ message }}
+                </p>
+              </ion-text>
+            }
+            @if (errorMessage) {
+              <ion-text color="danger">
+                <p>
+                  {{ errorMessage }}
+                </p>
+              </ion-text>
+            }
+          </ion-card-content>
+        </ion-card>
+      }
 
-        </ion-input>
-
-      </ion-item>
-
-      <ion-button expand="block" (click)="createCampaign()" [disabled]="saving">
-
-        {{
-
-        saving
-        ? 'Saving...'
-        : 'Create Campaign'
-
-        }}
-
-      </ion-button>
-
-      <ion-text color="success" *ngIf="message">
-
-        <p>
-          {{ message }}
-        </p>
-
-      </ion-text>
-
-      <ion-text color="danger" *ngIf="errorMessage">
-
-        <p>
-          {{ errorMessage }}
-        </p>
-
-      </ion-text>
-
-    </ion-card-content>
-
-
-  </ion-card>
-
-</ion-content>
+    </ion-content>

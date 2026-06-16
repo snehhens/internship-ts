@@ -36,16 +36,16 @@
 
         </ion-item>
 
-        <p
-          class="auth-error"
-          *ngIf="
+        @if (
           registerForm.get('email')?.touched &&
           registerForm.get('email')?.invalid
-          ">
-
-          Enter a valid email
-
-        </p>
+          ) {
+          <p
+            class="auth-error"
+            >
+            Enter a valid email
+          </p>
+        }
 
         <!-- ROLE -->
 
@@ -70,38 +70,33 @@
 
         </div>
 
-        <div
-          class="role-dropdown"
-          *ngIf="showRoleDropdown">
-
+        @if (showRoleDropdown) {
           <div
-            class="role-option"
-            (click)="selectRole('Influencer')">
-
-            Influencer
-
+            class="role-dropdown"
+            >
+            <div
+              class="role-option"
+              (click)="selectRole('Influencer')">
+              Influencer
+            </div>
+            <div
+              class="role-option"
+              (click)="selectRole('Brand')">
+              Brand
+            </div>
           </div>
+        }
 
-          <div
-            class="role-option"
-            (click)="selectRole('Brand')">
-
-            Brand
-
-          </div>
-
-        </div>
-
-        <p
-          class="auth-error"
-          *ngIf="
+        @if (
           registerForm.get('role')?.touched &&
           registerForm.get('role')?.invalid
-          ">
-
-          Please select a role
-
-        </p>
+          ) {
+          <p
+            class="auth-error"
+            >
+            Please select a role
+          </p>
+        }
 
         <!-- BUTTON -->
 

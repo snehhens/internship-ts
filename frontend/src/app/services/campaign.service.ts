@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { CampaignPayload } from '../interfaces/campaign.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { CampaignPayload } from '../interfaces/campaign.interface';
 export class CampaignService {
 
   apiUrl =
-    'http://localhost:5000/api/campaign';
+    `${environment.apiUrl}/campaign`;
 
   constructor(
     private http: HttpClient

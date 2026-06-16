@@ -9,6 +9,7 @@ import {
   CampaignPayload
 } from 'src/app/interfaces/campaign.interface';
 import { ProfileDetailsResponse } from 'src/app/interfaces/profile.interface';
+import { environment } from 'src/environments/environment';
 
 import { UploadService } from
   'src/app/services/upload.service';
@@ -20,6 +21,8 @@ import { UploadService } from
   standalone: false,
 })
 export class HomePage implements OnInit {
+
+  public readonly serverUrl = environment.serverUrl;
 
   user: any;
 
@@ -234,8 +237,6 @@ export class HomePage implements OnInit {
 
     return Math.max(0, Math.ceil(difference / (1000 * 60 * 60 * 24)));
   }
-
-
 
   onImageSelected(
     event: any

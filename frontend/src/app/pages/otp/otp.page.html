@@ -54,26 +54,26 @@
 
         </div>
 
-        <p
-          class="auth-error"
-          *ngIf="
+        @if (
           otpForm.get('otp')?.touched &&
           otpForm.get('otp')?.invalid
-          ">
-
-          Enter valid 4 digit OTP
-
-        </p>
+          ) {
+          <p
+            class="auth-error"
+            >
+            Enter valid 4 digit OTP
+          </p>
+        }
 
         <!-- BACKEND ERROR -->
 
-        <p
-          class="auth-error"
-          *ngIf="errorMessage">
-
-          {{ errorMessage }}
-
-        </p>
+        @if (errorMessage) {
+          <p
+            class="auth-error"
+            >
+            {{ errorMessage }}
+          </p>
+        }
 
         <!-- BUTTON -->
 
@@ -83,16 +83,17 @@
           [disabled]="loading"
           (click)="verifyOtp()">
 
-          <ion-spinner
-            *ngIf="loading"
-            name="crescent">
-          </ion-spinner>
+          @if (loading) {
+            <ion-spinner
+              name="crescent">
+            </ion-spinner>
+          }
 
-          <span *ngIf="!loading">
-
-            Verify OTP
-
-          </span>
+          @if (!loading) {
+            <span>
+              Verify OTP
+            </span>
+          }
 
         </ion-button>
 
@@ -100,21 +101,20 @@
 
         <div class="otp-resend">
 
-          <span *ngIf="resendDisabled">
+          @if (resendDisabled) {
+            <span>
+              Resend OTP in
+              00:{{ timer }}
+            </span>
+          }
 
-            Resend OTP in
-            00:{{ timer }}
-
-          </span>
-
-          <span
-            class="resend-active"
-            *ngIf="!resendDisabled"
-            (click)="resendOtp()">
-
-            Resend OTP
-
-          </span>
+          @if (!resendDisabled) {
+            <span
+              class="resend-active"
+              (click)="resendOtp()">
+              Resend OTP
+            </span>
+          }
 
         </div>
 
