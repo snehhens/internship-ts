@@ -364,32 +364,26 @@
               Create Campaign
             </ion-card-title>
           </ion-card-header>
-          <ion-card-content>
+          <ion-card-content [formGroup]="campaignForm">
             <ion-item>
               <ion-label position="stacked">
                 Campaign Title
               </ion-label>
-        <ion-input [(ngModel)]="
-        campaignForm.campaignTitle
-      ">
+        <ion-input formControlName="campaignTitle">
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">
                 Description
               </ion-label>
-        <ion-textarea [(ngModel)]="
-        campaignForm.description
-      ">
+        <ion-textarea formControlName="description">
               </ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">
                 Category
               </ion-label>
-        <ion-select [(ngModel)]="
-        campaignForm.category
-      ">
+        <ion-select formControlName="category">
                 <ion-select-option value="Fashion">
                   Fashion
                 </ion-select-option>
@@ -408,9 +402,7 @@
               <ion-label position="stacked">
                 Platform
               </ion-label>
-        <ion-select [(ngModel)]="
-        campaignForm.platform
-      ">
+        <ion-select formControlName="platform">
                 <ion-select-option value="Instagram">
                   Instagram
                 </ion-select-option>
@@ -426,38 +418,54 @@
               <ion-label position="stacked">
                 Budget Per Influencer
               </ion-label>
-        <ion-input type="number" [(ngModel)]="
-        campaignForm.budgetPerInfluencer
-      ">
+        <ion-input type="number" formControlName="budgetPerInfluencer">
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">
                 Total Slots
               </ion-label>
-        <ion-input type="number" [(ngModel)]="
-        campaignForm.totalSlots
-      ">
+        <ion-input type="number" formControlName="totalSlots">
               </ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">
                 Start Date
               </ion-label>
-        <ion-input type="date" [(ngModel)]="
-        campaignForm.startDate
-      ">
+        <ion-input
+          id="start-date-picker"
+          readonly="true"
+          [value]="formatDate(campaignForm.get('startDate')?.value)"
+          placeholder="Select start date">
               </ion-input>
             </ion-item>
+            <ion-modal trigger="start-date-picker">
+              <ng-template>
+                <ion-datetime
+                  presentation="date"
+                  formControlName="startDate">
+                </ion-datetime>
+              </ng-template>
+            </ion-modal>
             <ion-item>
               <ion-label position="stacked">
                 End Date
               </ion-label>
-        <ion-input type="date" [(ngModel)]="
-        campaignForm.endDate
-      ">
+        <ion-input
+          id="end-date-picker"
+          readonly="true"
+          [value]="formatDate(campaignForm.get('endDate')?.value)"
+          placeholder="Select end date">
               </ion-input>
             </ion-item>
+            <ion-modal trigger="end-date-picker">
+              <ng-template>
+                <ion-datetime
+                  presentation="date"
+                  formControlName="endDate">
+                </ion-datetime>
+              </ng-template>
+            </ion-modal>
             <ion-button expand="block" (click)="createCampaign()" [disabled]="saving">
               {{
               saving

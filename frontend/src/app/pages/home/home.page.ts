@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { AuthService } from 'src/app/services/auth';
 import { CampaignService } from 'src/app/services/campaign.service';
 import {
-  CampaignForm,
   CampaignItem,
   CampaignPayload
 } from 'src/app/interfaces/campaign.interface';
@@ -50,18 +54,10 @@ export class HomePage implements OnInit {
 
   errorMessage = '';
 
-  campaignForm: CampaignForm = {
-    campaignTitle: '',
-    description: '',
-    category: '',
-    platform: '',
-    budgetPerInfluencer: 0,
-    totalSlots: 1,
-    startDate: '',
-    endDate: ''
-  };
+  campaignForm!: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private auth: AuthService,
     private campaignService: CampaignService,
     private uploadService: UploadService,
@@ -69,6 +65,17 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.campaignForm = this.fb.group({
+      campaignTitle: ['', Validators.required],
+      description: ['', Validators.required],
+      category: ['', Validators.required],
+      platform: ['', Validators.required],
+      budgetPerInfluencer: [0, Validators.required],
+      totalSlots: [1, Validators.required],
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
+    });
+
     this.auth.getProfile().subscribe({
       next: (res: any) => {
         this.user = res;
@@ -130,12 +137,9 @@ export class HomePage implements OnInit {
 
   createCampaign() {
 
-    if (
-      !this.campaignForm.campaignTitle ||
-      !this.campaignForm.description ||
-      !this.campaignForm.category ||
-      !this.campaignForm.platform
-    ) {
+    if (this.campaignForm.invalid) {
+
+      this.campaignForm.markAllAsTouched();
 
       this.errorMessage =
         'Please fill all fields';
@@ -150,10 +154,12 @@ export class HomePage implements OnInit {
     this.message = '';
     this.errorMessage = '';
 
+    const formValue = this.campaignForm.value;
+
     const payload: CampaignPayload = {
-      ...this.campaignForm,
-      budgetPerInfluencer: Number(this.campaignForm.budgetPerInfluencer),
-      totalSlots: Number(this.campaignForm.totalSlots),
+      ...formValue,
+      budgetPerInfluencer: Number(formValue.budgetPerInfluencer),
+      totalSlots: Number(formValue.totalSlots),
       brandId: this.user._id,
       brandName:
         this.user.username ||
@@ -164,7 +170,7 @@ export class HomePage implements OnInit {
       next: () => {
         this.saving = false;
         this.message = 'Campaign created successfully.';
-        this.campaignForm = {
+        this.campaignForm.reset({
           campaignTitle: '',
           description: '',
           category: '',
@@ -173,7 +179,7 @@ export class HomePage implements OnInit {
           totalSlots: 1,
           startDate: '',
           endDate: ''
-        };
+        });
         this.loadCampaigns();
       },
       error: () => {
@@ -236,6 +242,18 @@ export class HomePage implements OnInit {
     const difference = end - now;
 
     return Math.max(0, Math.ceil(difference / (1000 * 60 * 60 * 24)));
+  }
+
+  formatDate(dateValue: string) {
+    if (!dateValue) {
+      return '';
+    }
+
+    return new Intl.DateTimeFormat('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    }).format(new Date(dateValue));
   }
 
   onImageSelected(
