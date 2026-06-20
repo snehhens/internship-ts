@@ -10,7 +10,9 @@
 
     <ion-buttons slot="end">
 
-      <ion-button fill="clear" (click)="toggleProfileDetails()">
+      <ion-button
+  fill="clear"
+  routerLink="/my-profile">
 
         <ion-icon name="person-circle-outline">
         </ion-icon>
@@ -31,7 +33,56 @@
 
 <ion-content class="home-page" [fullscreen]="true">
 
-  @if (profileDetails) {
+  <ion-card>
+
+  <ion-card-header>
+
+    <ion-card-title>
+      Quick Actions
+    </ion-card-title>
+
+  </ion-card-header>
+
+  <ion-card-content>
+
+    <ion-button
+      expand="block"
+      routerLink="/my-profile">
+
+      My Profile
+
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      routerLink="/portfolio">
+
+      Portfolio
+
+    </ion-button>
+
+    <ion-button
+      expand="block"
+      routerLink="/campaigns">
+
+      Campaigns
+
+    </ion-button>
+
+    <ion-button
+      *ngIf="user?.role === 'brand'"
+      expand="block"
+      routerLink="/create-campaign">
+
+      Create Campaign
+
+    </ion-button>
+
+  </ion-card-content>
+
+</ion-card>
+
+ <!-- @if (profileDetails) {
     <div>
       <div style="text-align:center">
         @if (
@@ -66,7 +117,7 @@
         <strong>Role:</strong>
         {{ profileDetails.user.role }}
       </p>
-      <!-- BRAND DETAILS -->
+      
       @if (user?.role === 'brand') {
         <div>
           <p>
@@ -101,7 +152,7 @@
           </p>
         </div>
       }
-      <!-- INFLUENCER DETAILS -->
+      
       @if (user?.role === 'influencer') {
         <div>
           <p>
@@ -141,7 +192,8 @@
     </div>
   }
 
-  <!--portfolio-->
+-->
+  <!--portfolio
 
   @if (user?.role === 'influencer') {
     <ion-card>
@@ -205,7 +257,7 @@
         </ion-card>
       }
 
-      <!-- BRAND TABS -->
+      <!-- BRAND TABS 
 
       @if (user?.role === 'brand') {
         <ion-segment  value="live" (ionChange)="selectTab($event.detail.value || 'live')">
@@ -222,7 +274,7 @@
         </ion-segment>
       }
 
-      <!-- LIVE CAMPAIGNS -->
+      <!-- LIVE CAMPAIGNS 
 
       @if (selectedTab === 'live') {
         <ion-card>
@@ -293,7 +345,7 @@
                           Closed
                         </ion-badge>
                       }
-                      <!-- BRAND ACTIONS -->
+                      <!-- BRAND ACTIONS 
                       @if (user?.role === 'brand') {
                         <div>
               <ion-button size="small" color="success" (click)="
@@ -314,7 +366,7 @@
                           </ion-button>
                         </div>
                       }
-                      <!-- INFLUENCER APPLY -->
+                      <!-- INFLUENCER APPLY 
                       @if (
                         user?.role === 'influencer'
                         ) {
@@ -351,7 +403,7 @@
         </ion-card>
       }
 
-      <!-- CREATE CAMPAIGN -->
+      <!-- CREATE CAMPAIGN
 
       @if (
         selectedTab === 'create'
@@ -491,4 +543,4 @@
         </ion-card>
       }
 
-    </ion-content>
+    </ion-content> -->

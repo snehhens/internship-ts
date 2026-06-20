@@ -1,0 +1,126 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title routerLink="/home">
+      My Profile
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+
+<ion-content>
+<br>
+  @if (profileDetails) {
+    <div>
+      <div style="text-align:center">
+        @if (
+          $any(profileDetails.profile)?.profileImage ||
+          $any(profileDetails.profile)?.companyLogo
+          ) {
+<img [src]="
+
+      serverUrl +
+
+      (
+
+        $any(profileDetails.profile)?.profileImage ||
+
+        $any(profileDetails.profile)?.companyLogo
+
+      )
+
+    " width="120" height="120" style="
+      border-radius:50%;
+      object-fit:cover;
+    ">
+        }
+        <br><br>
+        <input type="file" accept="image/*" (change)="onImageSelected($event)">
+      </div>
+      <p>
+        <strong>Email:</strong>
+        {{ profileDetails.user.email }}
+      </p>
+      <p>
+        <strong>Role:</strong>
+        {{ profileDetails.user.role }}
+      </p>
+      <!-- BRAND DETAILS -->
+      @if (user?.role === 'brand') {
+        <div>
+          <p>
+            <strong>First Name:</strong>
+            {{ $any(profileDetails.profile)?.firstName || '-' }}
+          </p>
+          <p>
+            <strong>Last Name:</strong>
+            {{ $any(profileDetails.profile)?.lastName || '-' }}
+          </p>
+          <p>
+            <strong>Contact Number:</strong>
+            {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+          </p>
+          <p>
+            <strong>Website:</strong>
+            {{ $any(profileDetails.profile)?.website || '-' }}
+          </p>
+          <p>
+            <strong>Brand Description:</strong>
+            {{ $any(profileDetails.profile)?.brandDescription || '-' }}
+          </p>
+          <p>
+            <strong>Industry:</strong>
+            {{ $any(profileDetails.profile)?.industry?.join(', ') || '-' }}
+          </p>
+          <p>
+            <strong>Budget Range:</strong>
+            ₹{{ $any(profileDetails.profile)?.budgetMin || 0 }}
+            -
+            ₹{{ $any(profileDetails.profile)?.budgetMax || 0 }}
+          </p>
+        </div>
+      }
+      <!-- INFLUENCER DETAILS -->
+      @if (user?.role === 'influencer') {
+        <div>
+          <p>
+            <strong>Username:</strong>
+            {{ $any(profileDetails.profile)?.username || '-' }}
+          </p>
+          <p>
+            <strong>Bio:</strong>
+            {{ $any(profileDetails.profile)?.bio || '-' }}
+          </p>
+          <p>
+            <strong>Category:</strong>
+            {{ $any(profileDetails.profile)?.category || '-' }}
+          </p>
+          <p>
+            <strong>Country:</strong>
+            {{ $any(profileDetails.profile)?.country || '-' }}
+          </p>
+          <p>
+            <strong>Contact Number:</strong>
+            {{ $any(profileDetails.profile)?.contactNumber || '-' }}
+          </p>
+          <p>
+            <strong>Instagram Followers:</strong>
+            {{ $any(profileDetails.profile)?.instagramFollowers || 0 }}
+          </p>
+          <p>
+            <strong>YouTube Followers:</strong>
+            {{ $any(profileDetails.profile)?.youtubeFollowers || 0 }}
+          </p>
+          <p>
+            <strong>Twitter Followers:</strong>
+            {{ $any(profileDetails.profile)?.twitterFollowers || 0 }}
+          </p>
+        </div>
+      }
+    </div>
+  }
+</ion-content>

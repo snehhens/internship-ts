@@ -1,0 +1,246 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title routerLink="/home">
+      Campaigns
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+
+      <ion-card-title>
+        Campaigns
+      </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      @if (loading) {
+
+        <ion-text>
+
+          Loading campaigns...
+
+        </ion-text>
+
+      }
+
+      @if (!loading) {
+
+        <div>
+
+          @for (
+            campaign of campaigns;
+            track campaign
+          ) {
+
+            <ion-card>
+
+              <ion-card-header>
+
+                <ion-card-title>
+                  {{ campaign.campaignTitle }}
+                </ion-card-title>
+
+                <ion-card-subtitle>
+                  {{ campaign.brandName }}
+                </ion-card-subtitle>
+
+              </ion-card-header>
+
+              <ion-card-content>
+
+                <p>
+                  {{ campaign.description }}
+                </p>
+
+                <p>
+                  {{ campaign.category }}
+                  |
+                  {{ campaign.platform }}
+                </p>
+
+                <p>
+                  ₹{{ campaign.budgetPerInfluencer }}
+                </p>
+
+                <p>
+                  Slots:
+                  {{ campaign.filledSlots || 0 }}
+                  /
+                  {{ campaign.totalSlots }}
+                </p>
+
+                <p>
+                  Days Left:
+                  {{ daysLeft(campaign.endDate) }}
+                </p>
+
+                <p>
+                  Applications:
+                  {{
+                    campaign.applications?.length || 0
+                  }}
+                  /
+                  {{ campaign.totalSlots }}
+                </p>
+
+                @if (
+                  campaign.status === 'active'
+                ) {
+
+                  <ion-badge color="success">
+                    Active
+                  </ion-badge>
+
+                }
+
+                @if (
+                  campaign.status === 'closed'
+                ) {
+
+                  <ion-badge color="medium">
+                    Closed
+                  </ion-badge>
+
+                }
+
+                <!-- BRAND -->
+
+                @if (
+                  user?.role === 'brand'
+                ) {
+
+                  <br><br>
+
+                  <ion-button
+                    size="small"
+                    color="success"
+                    (click)="
+                      changeCampaignStatus(
+                        campaign,
+                        'active'
+                      )
+                    ">
+
+                    Activate
+
+                  </ion-button>
+
+                  <ion-button
+                    size="small"
+                    color="danger"
+                    (click)="
+                      changeCampaignStatus(
+                        campaign,
+                        'closed'
+                      )
+                    ">
+
+                    Close
+
+                  </ion-button>
+
+                }
+
+                <!-- INFLUENCER -->
+
+                @if (
+                  user?.role === 'influencer'
+                ) {
+
+                  <br><br>
+
+                  <ion-button
+
+                    expand="block"
+
+                    color="primary"
+
+                    [disabled]="
+                      isApplied(campaign)
+                      ||
+                      applyingCampaignId ===
+                      campaign._id
+                    "
+
+                    (click)="
+                      applyToCampaign(
+                        campaign
+                      )
+                    ">
+
+                    {{
+                      isApplied(campaign)
+                      ? 'Applied'
+                      : 'Apply'
+                    }}
+
+                  </ion-button>
+
+                }
+
+              </ion-card-content>
+
+            </ion-card>
+
+          }
+
+          @if (
+            campaigns.length === 0
+          ) {
+
+            <ion-item>
+
+              <ion-label>
+
+                No campaigns found.
+
+              </ion-label>
+
+            </ion-item>
+
+          }
+
+        </div>
+
+      }
+
+      @if (message) {
+
+        <ion-text color="success">
+
+          <p>
+            {{ message }}
+          </p>
+
+        </ion-text>
+
+      }
+
+      @if (errorMessage) {
+
+        <ion-text color="danger">
+
+          <p>
+            {{ errorMessage }}
+          </p>
+
+        </ion-text>
+
+      }
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

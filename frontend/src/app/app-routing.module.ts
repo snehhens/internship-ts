@@ -46,6 +46,46 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
   },
+  {
+    path: 'portfolio',
+    loadChildren: () => import('./pages/portfolio/portfolio.module').then( m => m.PortfolioPageModule)
+  },
+  {
+    path: 'campaigns',
+    loadChildren: () => import('./pages/campaigns/campaigns.module').then( m => m.CampaignsPageModule)
+  },
+  {
+    path: 'create-campaign',
+    loadChildren: () => import('./pages/create-campaign/create-campaign.module').then( m => m.CreateCampaignPageModule)
+  },
+  {
+    path: 'my-profile',
+    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
+  },
+  {
+  path: 'my-profile',
+  loadChildren: () =>
+    import('./pages/my-profile/my-profile.module')
+      .then(m => m.MyProfilePageModule)
+},
+{
+  path: 'portfolio',
+  loadChildren: () =>
+    import('./pages/portfolio/portfolio.module')
+      .then(m => m.PortfolioPageModule)
+},
+{
+  path: 'campaigns',
+  loadChildren: () =>
+    import('./pages/campaigns/campaigns.module')
+      .then(m => m.CampaignsPageModule)
+},
+{
+  path: 'create-campaign',
+  loadChildren: () =>
+    import('./pages/create-campaign/create-campaign.module')
+      .then(m => m.CreateCampaignPageModule)
+}
 ];
 
 @NgModule({

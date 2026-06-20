@@ -1,0 +1,87 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-title  routerLink="/home">
+      Portfolio
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+
+    <ion-card-header>
+
+      <ion-card-title>
+        Upload Portfolio
+      </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <input
+        type="file"
+        accept="image/*,video/*"
+        (change)="onPortfolioSelected($event)"
+      >
+
+      <p *ngIf="uploading">
+        Uploading...
+      </p>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <ion-card-header>
+
+      <ion-card-title>
+        My Portfolio
+      </ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <div
+        *ngFor="let item of portfolioItems"
+      >
+
+        <img
+          *ngIf="item.fileType === 'image'"
+          [src]="serverUrl + item.fileUrl"
+          width="250"
+        >
+
+        <video
+          *ngIf="item.fileType === 'video'"
+          width="250"
+          controls
+        >
+
+          <source
+            [src]="serverUrl + item.fileUrl"
+          >
+
+        </video>
+
+        <p>
+          {{ item.originalName }}
+        </p>
+
+        <hr>
+
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

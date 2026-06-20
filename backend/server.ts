@@ -16,7 +16,8 @@ import mongoose from 'mongoose';
 
 import cors from 'cors';
 
-
+import instagramRoutes
+from './routes/instagram';
 
 import authRoutes
 from './routes/authRoutes';
@@ -81,6 +82,11 @@ app.use(
   express.static(
     path.join(__dirname, 'uploads')
   )
+);
+
+app.use(
+  '/api/instagram',
+  instagramRoutes
 );
 
 app.get(
